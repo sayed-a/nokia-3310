@@ -23,4 +23,8 @@ class DiallerViewModel @Inject constructor() : ViewModel() {
     fun backspace() {
         runBlocking { _numberFlow.emit(_numberFlow.value.dropLast(1)) }
     }
+
+    fun clear() {
+        runBlocking { _numberFlow.emit("") }
+    }
 }

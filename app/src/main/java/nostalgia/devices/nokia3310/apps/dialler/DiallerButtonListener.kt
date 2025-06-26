@@ -12,6 +12,7 @@ class DiallerButtonListener(val router: AppRouter, val diallerViewModel: Dialler
     }
 
     override fun onMenuPressed() {
+        diallerViewModel.clear()
         router.goTo(App.Caller)
     }
 
