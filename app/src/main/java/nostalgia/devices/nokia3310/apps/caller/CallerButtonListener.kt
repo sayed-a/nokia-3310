@@ -1,4 +1,4 @@
-package nostalgia.devices.nokia3310.apps.dialler
+package nostalgia.devices.nokia3310.apps.caller
 
 import nostalgia.devices.nokia3310.ButtonListener
 import nostalgia.devices.nokia3310.apps.App
@@ -6,25 +6,21 @@ import nostalgia.devices.nokia3310.apps.AppRouter
 import nostalgia.devices.nokia3310.shell.ArrowDirection
 import nostalgia.devices.nokia3310.shell.Key
 
-class DiallerButtonListener(val router: AppRouter, val diallerViewModel: DiallerViewModel): ButtonListener {
+class CallerButtonListener(private val router: AppRouter): ButtonListener {
+
     override fun onKeypadPressed(key: Key) {
-        diallerViewModel.addDigit(key.topText)
+        /* NOOP */
     }
 
     override fun onMenuPressed() {
-        diallerViewModel.clear()
-        router.goTo(App.Caller)
+        router.goTo(App.Home)
     }
 
     override fun onCancelPressed() {
-        if (diallerViewModel.isOnLastDigit) {
-            router.goTo(App.Home)
-        }
-
-        diallerViewModel.backspace()
+        router.goTo(App.Home)
     }
 
     override fun onArrowPressed(arrow: ArrowDirection) {
-
+        /* NOOP */
     }
 }
