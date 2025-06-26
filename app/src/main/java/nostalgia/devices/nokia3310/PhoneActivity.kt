@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import nostalgia.devices.nokia3310.apps.App
 import nostalgia.devices.nokia3310.apps.AppRouter
+import nostalgia.devices.nokia3310.apps.caller.CallerButtonListener
 import nostalgia.devices.nokia3310.apps.dialler.DiallerButtonListener
 import nostalgia.devices.nokia3310.apps.dialler.DiallerViewModel
 import nostalgia.devices.nokia3310.apps.home.HomeAppButtonListener
@@ -32,6 +33,7 @@ class PhoneActivity : ComponentActivity(), ButtonListener {
         super.onCreate(savedInstanceState)
 
         (buttonListeners as MutableMap).apply {
+            put(App.Caller, CallerButtonListener(router))
             put(App.Dialler, DiallerButtonListener(router, diallerViewModel))
             put(App.Home, HomeAppButtonListener(router, diallerViewModel))
             put(App.Menu, MenuAppButtonListener(router))
