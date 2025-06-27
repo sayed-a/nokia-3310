@@ -6,13 +6,13 @@ import nostalgia.devices.nokia3310.apps.AppRouter
 import nostalgia.devices.nokia3310.shell.ArrowDirection
 import nostalgia.devices.nokia3310.shell.Key
 
-class MenuAppButtonListener(val router: AppRouter): ButtonListener {
+class MenuAppButtonListener(val router: AppRouter, val menuViewModel: MenuViewModel): ButtonListener {
     override fun onKeypadPressed(key: Key) {
-        /* NOOP */
+        menuViewModel.setMenuItem(key.ordinal)
     }
 
     override fun onMenuPressed() {
-        /* NOOP */
+        router.goTo(menuViewModel.currentMenuItem.value.app)
     }
 
     override fun onCancelPressed() {
@@ -20,6 +20,10 @@ class MenuAppButtonListener(val router: AppRouter): ButtonListener {
     }
 
     override fun onArrowPressed(arrow: ArrowDirection) {
-        // TODO: Change current menu item
+        if (arrow == ArrowDirection.UP) {
+            menuViewModel.previous()
+        } else {
+            menuViewModel.next()
+        }
     }
 }

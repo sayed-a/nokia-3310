@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import nostalgia.devices.nokia3310.apps.App
 import nostalgia.devices.nokia3310.apps.AppRouter
 import nostalgia.devices.nokia3310.apps.caller.CallerButtonListener
@@ -17,6 +19,7 @@ import nostalgia.devices.nokia3310.apps.dialler.DiallerButtonListener
 import nostalgia.devices.nokia3310.apps.dialler.DiallerViewModel
 import nostalgia.devices.nokia3310.apps.home.HomeAppButtonListener
 import nostalgia.devices.nokia3310.apps.menu.MenuAppButtonListener
+import nostalgia.devices.nokia3310.apps.menu.MenuViewModel
 import nostalgia.devices.nokia3310.shell.ArrowDirection
 import nostalgia.devices.nokia3310.shell.Key
 import nostalgia.devices.nokia3310.shell.Phone
@@ -25,6 +28,7 @@ import nostalgia.devices.nokia3310.ui.theme.Nokia3310Theme
 @AndroidEntryPoint
 class PhoneActivity : ComponentActivity(), ButtonListener {
     val diallerViewModel: DiallerViewModel by viewModels()
+    val menuViewModel: MenuViewModel by viewModels()
 
     val router = AppRouter()
     val buttonListeners: Map<App, ButtonListener> = mutableMapOf()
@@ -32,11 +36,13 @@ class PhoneActivity : ComponentActivity(), ButtonListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val n: Int = 10
+
         (buttonListeners as MutableMap).apply {
             put(App.Caller, CallerButtonListener(router))
             put(App.Dialler, DiallerButtonListener(router, diallerViewModel))
             put(App.Home, HomeAppButtonListener(router, diallerViewModel))
-            put(App.Menu, MenuAppButtonListener(router))
+            put(App.Menu, MenuAppButtonListener(router, menuViewModel))
         }
 
         enableEdgeToEdge()
